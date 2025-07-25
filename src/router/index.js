@@ -4,7 +4,7 @@ import Home from '@/views/Home/index.vue'
 import file from '@/views/file/index.vue'
 import about from '@/views/about/index.vue'
 import friend from '@/views/fried/index.vue'
-import post from '@/views/bost/index.vue'
+import PostDetail from '@/views/PostDetail.vue'
 
 
 const router = createRouter({
@@ -32,14 +32,26 @@ const router = createRouter({
                     component:friend
                 },
                 {
-                    path:'post/:slug',
-                    component:post
-                },
+                    path: 'post/:id',
+                    name: 'PostDetail',
+                    component: PostDetail
+                }
                 
             ]
         },
         
     ],
+    scrollBehavior(to, from, savedPosition) {
+    // 如果路由中有指定的滚动位置（如锚点）
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      }
+    }
+    // 否则滚动到页面顶部
+    return { top: 0 }
+  }
 })
 
 export default router

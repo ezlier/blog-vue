@@ -27,7 +27,7 @@ import icon from '@/assets/img/icon1.png'
 .navbar {
   font-family: 'ziti1';
   position: fixed;
-  /* top: 20px;      距离顶部20px */
+  top: 0px; 
   left: 20px;     /* 距离左侧20px */
   right: 20px;    /* 距离右侧20px */
   padding: 5px 40px;
