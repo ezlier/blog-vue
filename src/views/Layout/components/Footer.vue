@@ -31,15 +31,20 @@ onMounted(() => {
 
 .kratos-footer {
   margin-top:10px;
-  background-color: #f5f5f5;
-  color: #666;
+  background: linear-gradient(
+    to right,
+    #d3959b,
+    #bfe6ba
+  );
+  color: whitesmoke;
   font-size: 14px;
   padding: 20px 0;
   text-align: center;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  border-top: 1px solid #eaeaea;
+  /* border-top: 1px solid #eaeaea; */
   width: 100%;
   box-sizing: border-box;
+  border-radius: 8px 8px 0px 0px;
 }
 .footer-content {
   max-width: 1200px;
@@ -48,13 +53,13 @@ onMounted(() => {
 }
 
 .copyright {
-  margin-bottom: 10px;
+  margin-bottom: 1px;
   line-height: 1.6;
 }
 
 .theme-credit {
   font-size: 13px;
-  color: #999;
+  color: white;
   margin-top: 5px;
 }
 </style>

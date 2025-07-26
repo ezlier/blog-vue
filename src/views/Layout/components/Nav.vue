@@ -34,7 +34,7 @@ import icon from '@/assets/img/icon1.png'
   background: rgba(221, 221, 221, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 25px;  /* 恢复完整圆角 */
+  border-radius: 0 0 8px 8px;  
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;

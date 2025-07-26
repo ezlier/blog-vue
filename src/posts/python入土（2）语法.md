@@ -2,7 +2,7 @@
 title: python入土（2）基础语法
 date: 2024-10-10 20:01:35
 tags: python
-
+image: '@assets/img/cover/cover (1).jpg'
 ---
 
 # 1，注释
@@ -135,7 +135,7 @@ print(type(float(变量名)))       #查看转换类型
 
    2.3    格式化 f
 
-   <!-- ![入土2](/images/入土2.png) -->
+   ![入土2](/images/入土2.png)
 
    例如：
 

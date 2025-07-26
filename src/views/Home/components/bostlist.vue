@@ -80,12 +80,17 @@ onMounted(async () => {
       
       // 计算字数
       const wordCount = content.replace(/\s/g, '').length
+
+      let imagePath = data.image
+      if (imagePath && imagePath.startsWith('@assets')) {
+        imagePath = imagePath.replace('@assets', '/src/assets')
+      }
       
       posts.value.push({
         id,
         title: data.title || '无标题',
         date: data.date,
-        image: data.image,
+        image: imagePath,
         wordCount
       })
     }
@@ -123,13 +128,14 @@ onMounted(async () => {
 
 .fakeimg {
   width: 100%;
-  padding: 20px;
+  /* padding: 20px; */
   height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background-color: #f5f5f5;
+  border-radius:8px;
 }
 
 .fakeimg img {

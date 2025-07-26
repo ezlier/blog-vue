@@ -27,22 +27,28 @@ import bostlist from './components/bostlist.vue';
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  background-color: red;
+  
   padding: 10px;
 }
 
+
+
 .leftcolumn {
   flex: 0 0 20%; /* 固定25%宽度 */
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #000;
 }
 
 .rightcolumn {
   flex: 1;       /* 剩余空间 */
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   padding: 20px;
   min-width: 0;  /* 防止内容溢出 */
   width: 14000px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #000;
 }
 
 .header{

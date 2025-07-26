@@ -39,22 +39,26 @@ import Clock from './clock.vue';
   display: flex;
   flex-direction: column;
   align-items: center; 
+  border-radius: 8px;
 }
 
 .clock-wrapper {
   width: 100%;
-  margin-top: 20px; /* 仅通过 margin 控制与 card 的间距 */
+  margin-top: 20px;
 }
 .avatar-container {
   width: 100px;
   height: 100px;
   overflow: hidden; 
   border-radius: 50%;
+  box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.2);
+  
 }
 
 .avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  
 }
 </style>

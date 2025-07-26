@@ -3,11 +3,18 @@
     <div class="header">
       <h1>{{ post.title || '无标题' }}</h1>
     </div>
-    <div class="meta">
-      <span>{{ formatDate(post.date) }}</span> | 
-      <span>{{ wordCount }} 字</span>
+    <div class="row">
+      <div class="leftcolumn">
+
+      </div>
+      <div class="rightcolumn">
+        <div class="meta">
+        <span>{{ formatDate(post.date) }}</span> | 
+        <span>{{ wordCount }} 字</span>
+      </div>
+      <div class="content" v-html="compiledMarkdown"></div>
+      </div>
     </div>
-    <div class="content" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
@@ -18,10 +25,22 @@ import MarkdownIt from 'markdown-it'
 import matter from 'gray-matter'
 import { Buffer } from 'buffer'
 window.Buffer = Buffer
+import hljs from 'highlight.js'
+import 'highlight.js/styles/atom-one-light.css'
+
 
 const route = useRoute()
 const post = ref({ content: '', title: '', date: '' })
-const md = new MarkdownIt()
+const md = new MarkdownIt({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value
+      } catch (__) {}
+    }
+    return '' // 使用默认的转义
+  }
+})
 
 // 计算字数
 const wordCount = computed(() => {
@@ -87,6 +106,32 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  
+  padding: 10px;
+}
+
+.leftcolumn {
+  flex: 0 0 20%; /* 固定25%宽度 */
+  /* background-color: #f1f1f1; */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #000;
+}
+
+.rightcolumn {
+  flex: 1;       /* 剩余空间 */
+  /* background-color: #f1f1f1; */
+  padding: 20px;
+  min-width: 0;  /* 防止内容溢出 */
+  width: 14000px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #000;
+}
+
 .header{
   height: 300px;
   display: flex;
@@ -96,7 +141,7 @@ onMounted(async () => {
 
 .post-detail {
   padding-top: 100px;
-  max-width: 900px;
+  /* max-width: 900px; */
   margin: 0 auto;
   padding: 20px;
   
@@ -111,9 +156,10 @@ onMounted(async () => {
 
 .content {
   line-height: 1.8;
-  margin-top: 30px;
+  margin-top: 20px;
   background-color: white;
   padding: 40px;
+  border-radius: 8px;
 }
 
 .content >>> h1, 
@@ -133,5 +179,34 @@ onMounted(async () => {
   margin: 20px 0;
 }
 
+.content >>> pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+  overflow: auto;
+  margin: 20px 0;
+  line-height: 1.45;
+  position: relative;
+}
+
+.content >>> code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.content >>> pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: block;
+}
+
+/* 行内代码样式 */
+.content >>> :not(pre) > code {
+  background-color: rgba(175, 184, 193, 0.2);
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+  color: #e83e8c;
+}
 
 </style>
