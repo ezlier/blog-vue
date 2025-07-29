@@ -5,7 +5,15 @@
     </div>
     <div class="row">
       <div class="leftcolumn">
-
+        <div class="toc-container" v-if="headings.length > 0">
+          <div class="toc-title">目录</div>
+          <ul class="toc-list">
+            <li v-for="(heading, index) in headings" :key="index" 
+                :class="['toc-item', `toc-level-${heading.level}`]">
+              <a @click="scrollToHeading(heading.id)">{{ heading.text }}</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="rightcolumn">
         <div class="meta">
@@ -19,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
 import matter from 'gray-matter'
@@ -42,6 +50,69 @@ const md = new MarkdownIt({
   }
 })
 
+const headings = ref([])
+
+const generateSlug = (text) => {
+  return text.toLowerCase()
+    .replace(/[^\w\u4e00-\u9fa5]+/g, '-')  // 替换非字母数字字符为-
+    .replace(/^-+|-+$/g, '')              // 去除首尾-
+    .substring(0, 50);                    // 限制长度
+}
+
+const extractHeadings = () => {
+  // 直接操作真实DOM而不是解析字符串
+  const contentEl = document.querySelector('.content');
+  if (!contentEl) return [];
+  
+  const headingElements = contentEl.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  const result = [];
+  
+  headingElements.forEach((el, index) => {
+    // 生成更可靠的ID
+    let id = el.id || generateSlug(el.textContent);
+    
+    // 确保ID唯一
+    let uniqueId = id;
+    let counter = 1;
+    while (document.getElementById(uniqueId)) {
+      uniqueId = `${id}-${counter++}`;
+    }
+    
+    // 实际设置元素的ID
+    el.id = uniqueId;
+    
+    result.push({
+      id: uniqueId,
+      text: el.textContent,
+      level: parseInt(el.tagName.substring(1))
+    });
+  });
+  
+  return result;
+};
+
+const scrollToHeading = (id) => {
+  nextTick(() => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: 'smooth'
+      });
+      
+      // 临时添加高亮效果
+      element.classList.add('highlight-scroll-target');
+      setTimeout(() => {
+        element.classList.remove('highlight-scroll-target');
+      }, 2000);
+    } else {
+      console.error(`跳转失败: 未找到 #${id}`, 
+        `现有标题IDs:`, [...document.querySelectorAll('[id^="heading"]')].map(el => el.id));
+    }
+  });
+};
 // 计算字数
 const wordCount = computed(() => {
   const text = post.value.content || ''
@@ -64,13 +135,20 @@ const formatDate = (dateString) => {
 
 // 编译 Markdown
 const compiledMarkdown = computed(() => {
-  return md.render(post.value.content || '')
-})
+  const html = md.render(post.value.content || '');
+  
+  // 在下一次DOM更新后提取标题
+  nextTick(() => {
+    headings.value = extractHeadings();
+  });
+  
+  return html;
+});
 
 // 加载文章内容
 onMounted(async () => {
   try {
-    console.log(`加载文章: ${route.params.id}.md`)
+    
     
     // 使用绝对路径
     const postFiles = import.meta.glob('@/posts/*.md', { 
@@ -94,15 +172,18 @@ onMounted(async () => {
         content
       }
       
-      console.log('文章内容加载完成')
+      
     } else {
-      console.error(`文章未找到: ${fileName}`)
-      console.log('可用文章:', Object.keys(postFiles))
+      
     }
   } catch (error) {
-    console.error('加载文章出错:', error)
+    
   }
 })
+
+watch(() => post.value.content, () => {
+  nextTick(extractHeadings);
+});
 </script>
 
 <style scoped>
@@ -162,12 +243,16 @@ onMounted(async () => {
   border-radius: 8px;
 }
 
-.content >>> h1, 
-.content >>> h2, 
-.content >>> h3 {
-  margin-top: 1.5em;
-  margin-bottom: 0.8em;
+.content >>> h1,
+.content >>> h2,
+.content >>> h3,
+.content >>> h4,
+.content >>> h5,
+.content >>> h6 {
+  position: relative;
+  scroll-margin-top: 80px; /* 与滚动偏移量匹配 */
 }
+
 
 .content >>> p {
   margin-bottom: 1em;
@@ -209,4 +294,71 @@ onMounted(async () => {
   color: #e83e8c;
 }
 
+.toc-container {
+  position: sticky;
+  top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toc-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  padding: 5px 0;
+  line-height: 1.4;
+}
+
+.toc-item a {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.toc-item a:hover {
+  color: #42b983;
+  background-color: #f5f5f5;
+}
+
+.toc-item a:active {
+  transform: translateY(1px);
+}
+
+/* 不同级别标题缩进 */
+.toc-level-2 { padding-left: 15px; }
+.toc-level-3 { padding-left: 30px; }
+.toc-level-4 { padding-left: 45px; }
+.toc-level-5 { padding-left: 60px; }
+.toc-level-6 { padding-left: 75px; }
+
+/* 添加高亮样式 */
+.content >>> .highlight-scroll-target {
+  animation: highlight 2s ease;
+}
+
+@keyframes highlight {
+  0% { background-color: rgba(255, 235, 59, 0.5); }
+  100% { background-color: transparent; }
+}
+
+/* 确保内容区域有相对定位 */
+.content {
+  position: relative;
+}
 </style>

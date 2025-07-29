@@ -53,7 +53,7 @@ const goToPost = (id) => {
 // 加载并解析所有 Markdown 文件
 onMounted(async () => {
   try {
-    console.log('开始加载文章...')
+    
     
     // 使用绝对路径 - 从项目根目录开始
     const postFiles = import.meta.glob('@/posts/*.md', { 
@@ -62,21 +62,21 @@ onMounted(async () => {
       eager: true 
     })
     
-    console.log('找到的Markdown文件:', Object.keys(postFiles))
+    
     
     for (const [path, rawContent] of Object.entries(postFiles)) {
-      console.log('处理文件:', path)
+      
       
       // 解析文件名作为 ID
       const fileName = path.split('/').pop()
       const id = fileName.replace('.md', '')
       
-      console.log('文件内容预览:', rawContent.substring(0, 100) + '...')
+      
       
       // 使用 gray-matter 解析 Front Matter 和内容
       const { data, content } = matter(rawContent)
       
-      console.log('解析的Front Matter:', data)
+      
       
       // 计算字数
       const wordCount = content.replace(/\s/g, '').length
@@ -98,9 +98,9 @@ onMounted(async () => {
     // 按日期排序（最新在前）
     posts.value.sort((a, b) => new Date(b.date) - new Date(a.date))
     
-    console.log('加载完成，文章列表:', posts.value)
+    
   } catch (error) {
-    console.error('加载文章列表出错:', error)
+    
   }
 })
 </script>
