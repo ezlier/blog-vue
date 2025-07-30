@@ -6,7 +6,7 @@
     <div class="row">
       <div class="leftcolumn">
         <div class="toc-container" v-if="headings.length > 0">
-          <div class="toc-title">目录</div>
+          <div class="toc-title">文章目录</div>
           <ul class="toc-list">
             <li v-for="(heading, index) in headings" :key="index" 
                 :class="['toc-item', `toc-level-${heading.level}`]">
@@ -17,9 +17,9 @@
       </div>
       <div class="rightcolumn">
         <div class="meta">
-        <span>{{ formatDate(post.date) }}</span> | 
-        <span>{{ wordCount }} 字</span>
-      </div>
+          <span>{{ formatDate(post.date) }}</span> | 
+          <span>{{ wordCount }} 字</span>
+        </div>
       <div class="content" v-html="compiledMarkdown"></div>
       </div>
     </div>
@@ -229,15 +229,19 @@ watch(() => post.value.content, () => {
 }
 
 .meta {
-  color: #666;
+  color: black;
   margin-bottom: 20px;
   font-size: 0.9em;
-  
+  display: inline-block; 
+  background-color: #fcbad3; 
+  padding: 4px 8px; 
+  border-radius: 14px;
+  font-weight:bold;
 }
 
 .content {
   line-height: 1.8;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   background-color: white;
   padding: 40px;
   border-radius: 8px;
@@ -332,7 +336,7 @@ watch(() => post.value.content, () => {
 }
 
 .toc-item a:hover {
-  color: #42b983;
+  color: rgba(142, 140, 216, 0.7);
   background-color: #f5f5f5;
 }
 
@@ -360,5 +364,20 @@ watch(() => post.value.content, () => {
 /* 确保内容区域有相对定位 */
 .content {
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  
+  .leftcolumn {
+    display: none;  
+  }
+
+  .rightcolumn {
+    width: 100%;    
+  }
+
 }
 </style>

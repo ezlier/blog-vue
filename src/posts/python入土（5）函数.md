@@ -2,7 +2,7 @@
 title: python入土(5)函数
 date: 2024-11-20 19:39:30
 tags: python
-cover: /images/入土（5）的封面.jpg
+image: '@assets/img/cover/cover-7.jpg'
 ---
 
 # 自定义函数

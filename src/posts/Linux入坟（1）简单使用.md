@@ -2,7 +2,7 @@
 title: Linux入坟
 date: 2025-03-05 20:20:50
 tags: Linux
-cover: /images/封面(10).jpg
+image: '@assets/img/cover/cover-2.jpg'
 ---
 
 # Linux简介

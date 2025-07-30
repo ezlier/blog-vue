@@ -88,7 +88,7 @@ export default {
 .blog-content {
   font-size: 2rem;
   font-weight: bold;
-  color: #333;
+  color: #8785a2;
 }
 
 .sub-content {
@@ -104,7 +104,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  color: #555;
+  color: #3f72af;
   /* white-space: nowrap; */
   position: relative;
   box-sizing: border-box; /* 确保padding包含在高度内 */

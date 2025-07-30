@@ -2,7 +2,7 @@
 title: python入土（1）
 date: 2024-10-05 16:36:07
 tags: python
-
+image: '@assets/img/cover/cover-3.png'
 ---
 
 # 1，认识python

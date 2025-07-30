@@ -128,7 +128,7 @@ onMounted(async () => {
 
 .fakeimg {
   width: 100%;
-  /* padding: 20px; */
+  
   height: 200px;
   display: flex;
   align-items: center;

@@ -52,8 +52,24 @@ import bostlist from './components/bostlist.vue';
 }
 
 .header{
-  margin-bottom:300px;
-  margin-top:200px;
+  height: 600px;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
   
+  .leftcolumn {
+    display: none;  
+  }
+
+  .rightcolumn {
+    width: 100%;    
+  }
+
 }
 </style>
