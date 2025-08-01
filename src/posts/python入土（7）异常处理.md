@@ -2,7 +2,7 @@
 title: python入土（7）异常处理
 date: 2024-12-23 20:04:39
 tags: python
-image: '@assets/img/cover/cover-9.jpg'
+image: '@assets/img/cover/cover-9.png'
 ---
 
 # 1，异常

@@ -13,9 +13,7 @@ import icon from '@/assets/img/icon1.png'
       <li>
         <router-link to="/file" exact-active-class="active">归档</router-link>
       </li>
-      <li>
-        <router-link to="/friend" exact-active-class="active">友链</router-link>
-      </li>
+      
       <li>
         <router-link to="/about" exact-active-class="active">关于</router-link>
       </li>

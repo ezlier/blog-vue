@@ -1,7 +1,7 @@
 <template>
   <div class="card-container">
     <div 
-      v-for="post in posts" 
+      v-for="post in visiblePosts" 
       :key="post.id"
       class="card"
       @click="goToPost(post.id)"
@@ -12,25 +12,48 @@
         {{ post.wordCount }} 字
       </h5>
       <div class="fakeimg" style="height:200px;">
-        <img v-if="post.image" :src="post.image" alt="封面图">
+        <img v-if="post.image" :src="post.image" alt="封面图" loading="lazy">
         <div v-else class="default-image">
           <span>暂无图片</span>
         </div>
       </div>
     </div>
+    
+    <!-- 加载状态指示器 -->
+    <div v-if="isLoading" class="loading-indicator">
+      加载中...
+    </div>
+    
+    <!-- 底部观察元素 - 确保在视图中 -->
+    <div ref="bottomObserver" style="height: 1px;"></div>
   </div>
 </template>
 
 <script setup>
 import { Buffer } from 'buffer'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import matter from 'gray-matter'
 
 const router = useRouter()
 const posts = ref([])
+const visibleCount = ref(6)
+const isLoading = ref(false)
+const bottomObserver = ref(null)
+let observer = null
 
 window.Buffer = Buffer
+
+// 计算属性：当前可见的文章
+const visiblePosts = computed(() => {
+  return posts.value.slice(0, visibleCount.value)
+})
+
+// 检查是否还有更多内容可加载
+const hasMorePosts = computed(() => {
+  return visibleCount.value < posts.value.length
+})
+
 // 格式化日期
 const formatDate = (dateString) => {
   if (!dateString) return '无日期'
@@ -41,7 +64,7 @@ const formatDate = (dateString) => {
       day: 'numeric'
     })
   } catch {
-    return dateString // 返回原始字符串
+    return dateString
   }
 }
 
@@ -50,37 +73,56 @@ const goToPost = (id) => {
   router.push({ name: 'PostDetail', params: { id } })
 }
 
+// 加载更多文章
+const loadMore = () => {
+  if (isLoading.value || !hasMorePosts.value) return
+  
+  isLoading.value = true
+  setTimeout(() => {
+    visibleCount.value += 6
+    isLoading.value = false
+  }, 500)
+}
+
+// 初始化IntersectionObserver
+const initObserver = () => {
+  // 确保观察器只初始化一次
+  if (observer) return
+  
+  observer = new IntersectionObserver(
+    (entries) => {
+      const [entry] = entries
+      if (entry.isIntersecting && hasMorePosts.value) {
+        loadMore()
+      }
+    },
+    {
+      root: null,
+      rootMargin: '100px', // 提前100px触发
+      threshold: 0.1
+    }
+  )
+
+  if (bottomObserver.value) {
+    observer.observe(bottomObserver.value)
+  }
+}
+
 // 加载并解析所有 Markdown 文件
 onMounted(async () => {
   try {
-    
-    
-    // 使用绝对路径 - 从项目根目录开始
     const postFiles = import.meta.glob('@/posts/*.md', { 
       query: '?raw', 
       import: 'default', 
       eager: true 
     })
     
-    
-    
     for (const [path, rawContent] of Object.entries(postFiles)) {
-      
-      
-      // 解析文件名作为 ID
       const fileName = path.split('/').pop()
       const id = fileName.replace('.md', '')
-      
-      
-      
-      // 使用 gray-matter 解析 Front Matter 和内容
       const { data, content } = matter(rawContent)
       
-      
-      
-      // 计算字数
       const wordCount = content.replace(/\s/g, '').length
-
       let imagePath = data.image
       if (imagePath && imagePath.startsWith('@assets')) {
         imagePath = imagePath.replace('@assets', '/src/assets')
@@ -95,12 +137,21 @@ onMounted(async () => {
       })
     }
     
-    // 按日期排序（最新在前）
     posts.value.sort((a, b) => new Date(b.date) - new Date(a.date))
     
+    // 确保DOM更新后初始化观察器
+    setTimeout(initObserver, 100)
     
   } catch (error) {
-    
+    console.error('加载文章失败:', error)
+  }
+})
+
+// 组件卸载时清除观察器
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect()
+    observer = null
   }
 })
 </script>
@@ -108,8 +159,10 @@ onMounted(async () => {
 <style scoped>
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
   gap: 20px;
+  padding-bottom: 20px;
+  position: relative;
 }
 
 .card {
@@ -128,7 +181,6 @@ onMounted(async () => {
 
 .fakeimg {
   width: 100%;
-  
   height: 200px;
   display: flex;
   align-items: center;
@@ -149,9 +201,16 @@ onMounted(async () => {
   font-size: 16px;
 }
 
-.empty-state {
+.loading-indicator {
+  grid-column: 1 / -1;
   text-align: center;
-  padding: 40px;
+  padding: 20px;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    grid-template-columns: 1fr; /* 一列 */
+  }
 }
 </style>

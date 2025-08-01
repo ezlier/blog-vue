@@ -2,12 +2,13 @@
 import About from '../Home/components/about.vue';
 import { Buffer } from 'buffer';
 import matter from 'gray-matter';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 window.Buffer = Buffer;
 const router = useRouter();
 const posts = ref([]);
+const activeTag = ref('全部');
 
 onMounted(async () => {
   try {
@@ -22,14 +23,20 @@ onMounted(async () => {
       const id = fileName.replace('.md', '');
       const { data, content } = matter(rawContent);
       
+      // 确保tags始终是数组
+      let tags = [];
+      if (data.tags) {
+        tags = Array.isArray(data.tags) ? data.tags : [data.tags];
+      }
+      
       posts.value.push({
         id,
         title: data.title || '无标题',
         date: data.date ? new Date(data.date) : new Date(),
+        tags: tags.filter(Boolean), // 过滤掉空值
       });
     }
     
-    // 按日期排序（最新在前）
     posts.value.sort((a, b) => b.date - a.date);
     
   } catch (error) {
@@ -37,11 +44,30 @@ onMounted(async () => {
   }
 });
 
+// 获取所有标签
+const allTags = computed(() => {
+  const tags = new Set();
+  posts.value.forEach(post => {
+    post.tags?.forEach(tag => tags.add(tag));
+  });
+  return ['全部', ...Array.from(tags).sort()];
+});
+
+// 按标签筛选文章
+const filteredPosts = computed(() => {
+  if (activeTag.value === '全部') {
+    return posts.value;
+  }
+  return posts.value.filter(post => 
+    post.tags?.includes(activeTag.value)
+  );
+});
+
 // 按年份分组文章
-const groupedPosts = (posts) => {
+const groupedPosts = computed(() => {
   const groups = {};
   
-  posts.forEach(post => {
+  filteredPosts.value.forEach(post => {
     const year = post.date.getFullYear();
     if (!groups[year]) {
       groups[year] = [];
@@ -49,15 +75,15 @@ const groupedPosts = (posts) => {
     groups[year].push(post);
   });
   
-  // 按年份降序排列
   return Object.entries(groups)
     .sort(([yearA], [yearB]) => yearB - yearA)
     .map(([year, posts]) => ({ year, posts }));
-};
+});
 </script>
 
 <template>
   <div class="pigeonhole">
+    <div class="header-bg"></div>
     <div class="header">
       <h1>归档</h1>
     </div>
@@ -66,17 +92,27 @@ const groupedPosts = (posts) => {
         <About/>
       </div>
       <div class="rightcolumn">
-        <div v-for="group in groupedPosts(posts)" :key="group.year" class="year-group">
+        <!-- 标签筛选器 -->
+        <div class="tag-filter">
+          <button
+            v-for="tag in allTags"
+            :key="tag"
+            :class="{ active: activeTag === tag }"
+            @click="activeTag = tag"
+          >
+            {{ tag }}
+          </button>
+        </div>
+        
+        <div v-for="group in groupedPosts" :key="group.year" class="year-group">
           <h2>{{ group.year }}</h2>
           <ul class="post-list">
             <li v-for="post in group.posts" :key="post.id" class="post-item">
-              <!-- <input type="checkbox" class="post-checkbox"> -->
               <router-link :to="`/post/${post.id}`" class="post-title">
-                  <span class="post-date">
-                    {{ (post.date.getMonth() + 1).toString().padStart(2, '0') }}-{{ post.date.getDate().toString().padStart(2, '0') }}
-                  </span>
-              
-                    {{ post.title }}
+                <span class="post-date">
+                  {{ (post.date.getMonth() + 1).toString().padStart(2, '0') }}-{{ post.date.getDate().toString().padStart(2, '0') }}
+                </span>
+                {{ post.title }}
               </router-link>
             </li>
           </ul>
@@ -87,12 +123,15 @@ const groupedPosts = (posts) => {
 </template>
 
 <style scoped>
+
 .row {
   display: flex;
   align-items: flex-start;
   gap: 20px;
   padding: 10px;
   width: 100%;
+  max-width: 1280px;
+  box-sizing:border-box;
 }
 
 .leftcolumn {
@@ -100,6 +139,7 @@ const groupedPosts = (posts) => {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 2px 2px 5px #000;
+  box-sizing: border-box;
 }
 
 .rightcolumn {
@@ -109,7 +149,7 @@ const groupedPosts = (posts) => {
   border-radius: 8px;
   box-shadow: 2px 2px 5px #000;
   background-color: whitesmoke;
-  width: 10000px;
+  box-sizing: border-box;
 }
 
 .header {
@@ -124,10 +164,30 @@ const groupedPosts = (posts) => {
 }
 
 .year-group h2 {
+  position: relative;
   color: #333;
   border-bottom: 1px solid #ddd;
   padding-bottom: 8px;
   margin-bottom: 15px;
+  overflow: hidden; 
+}
+
+
+.year-group h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 20px; /* 初始宽度 */
+  height: 6px;
+  background: linear-gradient(to right, #d3959b, #d3959b);
+  border-radius: 3px; /* 圆角（高度的一半） */
+  transition: width 2s ease; 
+}
+
+
+.year-group h2:hover::after {
+  width: 80px;
 }
 
 .post-list {
@@ -186,7 +246,36 @@ const groupedPosts = (posts) => {
   font-weight:bold;
 }
 
-@media (max-width: 768px) {
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.tag-filter button {
+  padding: 4px 12px;
+  border: 1px solid #d3959b;
+  border-radius: 15px;
+  background-color: transparent;
+  color: #d3959b;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.tag-filter button:hover {
+  background-color: rgba(211, 149, 155, 0.1);
+}
+
+.tag-filter button.active {
+  background-color: #d3959b;
+  color: white;
+}
+
+@media (max-width: 1024px) {
   .row {
     flex-direction: column;
   }

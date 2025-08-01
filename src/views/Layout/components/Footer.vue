@@ -3,7 +3,7 @@
     <div class="footer-content">
       <div class="copyright">
         <p> {{ currentYear }} by Ezria. blog. | 这坨屎山运行了 {{ daysRunning }}天</p>
-        <p class="theme-credit">这日子真有盼头</p>
+        <p class="theme-credit">咕咕咕</p>
       </div>
       
     </div>
@@ -45,6 +45,8 @@ onMounted(() => {
   width: 100%;
   box-sizing: border-box;
   border-radius: 8px 8px 0px 0px;
+  left: 0px;
+  right: 0px;
 }
 .footer-content {
   max-width: 1200px;

@@ -64,7 +64,7 @@ const extractHeadings = () => {
   const contentEl = document.querySelector('.content');
   if (!contentEl) return [];
   
-  const headingElements = contentEl.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  const headingElements = contentEl.querySelectorAll('h1, h2, h3');
   const result = [];
   
   headingElements.forEach((el, index) => {
@@ -191,7 +191,7 @@ watch(() => post.value.content, () => {
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  
+  max-width: 1280px;
   padding: 10px;
 }
 
@@ -208,7 +208,7 @@ watch(() => post.value.content, () => {
   /* background-color: #f1f1f1; */
   padding: 20px;
   min-width: 0;  /* 防止内容溢出 */
-  width: 14000px;
+  /* width: 14000px; */
   border-radius: 8px;
   box-shadow: 2px 2px 5px #000;
 }
@@ -245,6 +245,7 @@ watch(() => post.value.content, () => {
   background-color: white;
   padding: 40px;
   border-radius: 8px;
+  min-height: 400px;
 }
 
 .content >>> h1,

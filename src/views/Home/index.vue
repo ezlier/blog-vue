@@ -27,7 +27,7 @@ import bostlist from './components/bostlist.vue';
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  
+  max-width: 1280px;
   padding: 10px;
 }
 
@@ -42,11 +42,11 @@ import bostlist from './components/bostlist.vue';
 }
 
 .rightcolumn {
-  flex: 1;       /* 剩余空间 */
-  /* background-color: #f1f1f1; */
+  flex: 1;       
+  
   padding: 20px;
-  min-width: 0;  /* 防止内容溢出 */
-  width: 14000px;
+  min-width: 0; 
+  width: 100%;
   border-radius: 8px;
   box-shadow: 2px 2px 5px #000;
 }
@@ -58,7 +58,7 @@ import bostlist from './components/bostlist.vue';
   align-items: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .row {
     flex-direction: column;
   }
