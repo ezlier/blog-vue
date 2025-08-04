@@ -2,7 +2,7 @@
 title: python入土（3）变量类型
 date: 2024-10-11 19:36:07
 tags: python
-image: '@assets/img/cover/cover-5.jpg'
+image: 'cover/cover-5.jpg'
 ---
 
 1. # 整数（int）

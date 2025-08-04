@@ -2,7 +2,7 @@
 title: python入土(6)常用函数
 date: 2024-12-16 20:12:48
 tags: python
-image: '@assets/img/cover/cover-8.jpg'
+image: 'cover/cover-8.jpg'
 ---
 
 

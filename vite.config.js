@@ -5,11 +5,11 @@ import vue from '@vitejs/plugin-vue'
 import { imagetools } from 'vite-imagetools'
 
 globalThis.Buffer = Buffer
-// https://vite.dev/config/
+
 export default defineConfig({
+  base: '/blog-vue/',
   plugins: [
     vue(),
-    
     imagetools()
   ],
   resolve: {
@@ -17,4 +17,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  build: {
+    outDir: "docs"
+  }
 })

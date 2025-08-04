@@ -2,7 +2,7 @@
 title: python入土（8）正则表达式
 date: 2025-01-02 19:43:05
 tags: python
-image: '@assets/img/cover/cover-10.jpg'
+image: 'cover/cover-10.jpg'
 ---
 
 # 1，正则表达式

@@ -2,7 +2,7 @@
 title: python入土（2）基础语法
 date: 2024-10-10 20:01:35
 tags: python
-image: '@assets/img/cover/cover-4.jpg'
+image: 'cover/cover-4.jpg'
 ---
 
 # 1，注释

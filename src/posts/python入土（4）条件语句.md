@@ -2,7 +2,7 @@
 title: python入土(4)程序控制结构
 date: 2024-10-31 19:36:50
 tags: python
-image: '@assets/img/cover/cover-6.jpg'
+image: 'cover/cover-6.jpg'
 ---
 
 # if语句
