@@ -1,7 +1,7 @@
 <template>
   <div class="post-detail">
     <div class="header">
-      <h1>{{ post.title || '无标题' }}</h1>
+      <h1 style="font-weight: 700;">{{ post.title || '无标题' }}</h1>
     </div>
     <div class="row">
       <div class="leftcolumn">
@@ -17,6 +17,7 @@
       </div>
       <div class="rightcolumn">
         <div class="meta">
+          <img :src="shijianicon" style="height: 15px;;">
           <span>{{ formatDate(post.date) }}</span> | 
           <span>{{ wordCount }} 字</span>
         </div>
@@ -27,6 +28,7 @@
 </template>
 
 <script setup>
+import shijianicon from '@/assets/img/icon/shijian.png'
 import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MarkdownIt from 'markdown-it'
@@ -218,6 +220,8 @@ watch(() => post.value.content, () => {
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
+  color: #8785a2;
+  
 }
 
 .post-detail {

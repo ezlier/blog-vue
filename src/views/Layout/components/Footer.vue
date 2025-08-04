@@ -2,8 +2,8 @@
   <footer class="kratos-footer ">
     <div class="footer-content">
       <div class="copyright">
-        <p> {{ currentYear }} by Ezria. blog. | 这坨屎山运行了 {{ daysRunning }}天</p>
-        <p class="theme-credit">咕咕咕</p>
+        <p> {{ currentYear }} by Ezria. blog. | 这个网页运行了 {{ daysRunning }}天</p>
+        <div style="display: flex;justify-content:center"><p class="theme-credit">咕咕咕</p><img :src="chabei" style="width: 20px;"/></div>
       </div>
       
     </div>
@@ -12,6 +12,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import chabei from '@/assets/img/icon/chabei.png'
 
 const currentYear = computed(() => new Date().getFullYear());
 const daysRunning = ref(0);
@@ -41,15 +42,14 @@ onMounted(() => {
   padding: 20px 0;
   text-align: center;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  /* border-top: 1px solid #eaeaea; */
   width: 100%;
   box-sizing: border-box;
   border-radius: 8px 8px 0px 0px;
-  left: 0px;
-  right: 0px;
+  flex-shrink: 0; 
+  bottom: 0;
 }
 .footer-content {
-  max-width: 1200px;
+  max-width: 12000px;
   margin: 0 auto;
   padding: 0 20px;
 }

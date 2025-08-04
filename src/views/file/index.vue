@@ -1,4 +1,6 @@
 <script setup>
+import yixuanze from '@/assets/img/icon/biaoqian.png'
+import weixuanze from '@/assets/img/icon/标签.png'
 import About from '../Home/components/about.vue';
 import { Buffer } from 'buffer';
 import matter from 'gray-matter';
@@ -85,7 +87,7 @@ const groupedPosts = computed(() => {
   <div class="pigeonhole">
     <div class="header-bg"></div>
     <div class="header">
-      <h1>归档</h1>
+      <h1 style="font-weight: 700;">归档</h1>
     </div>
     <div class="row">
       <div class="leftcolumn">
@@ -100,6 +102,12 @@ const groupedPosts = computed(() => {
             :class="{ active: activeTag === tag }"
             @click="activeTag = tag"
           >
+          <img 
+            :src="activeTag === tag ? yixuanze : weixuanze" 
+            class="tag-icon" 
+            alt="tag"
+            style="width: 13px;"
+            />
             {{ tag }}
           </button>
         </div>
@@ -157,6 +165,8 @@ const groupedPosts = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  color: #8785a2;
 }
 
 .year-group {
@@ -187,7 +197,7 @@ const groupedPosts = computed(() => {
 
 
 .year-group h2:hover::after {
-  width: 80px;
+  width: 50px;
 }
 
 .post-list {

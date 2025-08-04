@@ -71,7 +71,7 @@ export default {
 <style scoped>
 .clock-container {
   font: 100%/1.5 sans-serif;
-  color: white;
+  color: black;
   text-align: center;
   overflow: hidden;
   background-image: linear-gradient(
@@ -91,6 +91,8 @@ export default {
   font-size: 16px;
   width: 100%;
   height: 100%;
+  font-family: 'ziti2';
+  
 }
 
 .digit-group {

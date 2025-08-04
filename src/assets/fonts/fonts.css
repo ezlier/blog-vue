@@ -3,5 +3,13 @@
   src: url('../fonts/1.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
-  font-display: swap; /* 避免加载时的布局偏移 */
+  
+}
+
+@font-face {
+  font-family: 'ziti2';
+  src: url('../fonts/number.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  
 }

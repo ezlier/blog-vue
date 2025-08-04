@@ -71,5 +71,8 @@ import bostlist from './components/bostlist.vue';
     width: 100%;    
   }
 
+  .header{
+    height: 400px;
+  }
 }
 </style>

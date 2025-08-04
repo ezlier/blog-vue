@@ -1,20 +1,37 @@
 @import './base.css';
 
+/* 重置 body 布局 */
+body {
+  min-height: 100vh;
+  background-image: url('@/assets/img/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  
+  display: flex;
+  flex-direction: column; /* 关键：改为垂直布局 */
+}
+
+/* 调整 #app 以支持粘性页脚 */
 #app {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  
   box-sizing: border-box;
+  flex: 1; /* 关键：撑满剩余空间 */
+  display: flex;
+  flex-direction: column; /* 确保内部也是垂直布局 */
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+/* 移除媒体查询中冲突的 body 样式 */
+@media (min-width: 1024px) {
+  /* 不再需要 place-items: center */
 }
+
+
 
 @media (hover: hover) {
   a:hover {
@@ -22,27 +39,8 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    
-    padding: 0 2rem;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-body {
-  background-image: url('@/assets/img/background.png'); /* 替换为你的图片路径 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  margin: 0; /* 移除默认边距 */
-  display: flex;              /* 启用flex使#app可居中 */
-  justify-content: center; 
-}
-

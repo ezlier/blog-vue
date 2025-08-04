@@ -2,7 +2,7 @@
   <div class="header">
     <div class="blog-container">
       <div class="blog-content">
-        Blog
+        Ezria-blog
       </div>
       <div class="sub-content" ref="subContent">
         {{ displayedText }}
@@ -102,16 +102,16 @@ export default {
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.1);
   text-align: center;
-  min-height: 20px;  /* 改为固定高度 */
-  height: 44px;      /* 根据你的设计调整这个值 */
+  min-height: 20px; 
+  /* height: 44px;       */
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  color: #3f72af;
-  /* white-space: nowrap; */
+  color: #f38181;
   position: relative;
-  box-sizing: border-box; /* 确保padding包含在高度内 */
+  box-sizing: border-box;
+  font-style:italic
 }
 
 /* 新增光标动画 */

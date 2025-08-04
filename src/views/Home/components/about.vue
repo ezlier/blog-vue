@@ -62,7 +62,7 @@ onMounted(async () => {
         <div class="avatar-container">
           <img :src='head' width="100" class="avatar" />
         </div>
-        <h1>Ezria</h1>
+        <h1 style="color: #f77;">Ezria</h1>
         <div class="stats">
           <div class="stat-item">
             <span class="stat-label">文章</span>
@@ -125,6 +125,7 @@ onMounted(async () => {
   display: flex;
   margin-top: 10px;
   gap: 20px;
+  color: #f77;
 }
 
 .stat-item {
@@ -140,6 +141,6 @@ onMounted(async () => {
 
 .stat-label {
   font-size: 0.8rem;
-  color: #666;
+  
 }
 </style>

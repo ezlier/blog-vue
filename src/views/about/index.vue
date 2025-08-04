@@ -16,6 +16,11 @@
         <p style="padding-left: 15px;">真的会有人看吗</p>
         <div class="quote-bottom">”</div>
       </div>
+      <div class="http">
+        <a href="https://github.com/ezlier" class="GitHub"></a>
+        <a href="https://space.bilibili.com/440712287?spm_id_from=333.1007.0.0" class="blbl"></a>
+        
+      </div>
     </div>
     
     <div class="rightcolumn">
@@ -41,6 +46,44 @@
 </template>
 
 <style scoped>
+.http{
+  margin-top: 5px;
+}
+
+.blbl{
+  margin-left: 5px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('@/assets/img/icon/my2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.GitHub{
+    display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('@/assets/img/icon/github.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.bg-image-only-button:hover {
+  opacity: 0.8;
+}
+
+
 .aaa{
   background-image: linear-gradient(to  right, #d3959b, #bfe6ba);
   background-repeat: no-repeat;
