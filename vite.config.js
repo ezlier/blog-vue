@@ -7,7 +7,7 @@ import { imagetools } from 'vite-imagetools'
 globalThis.Buffer = Buffer
 
 export default defineConfig({
-  base: '/blog-vue/',
+  base: './',
   plugins: [
     vue(),
     imagetools()
