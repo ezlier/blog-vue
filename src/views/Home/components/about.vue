@@ -1,57 +1,18 @@
 <script setup>
 import head from '@/assets/img/head.jpg' 
 import Clock from './clock.vue';
-import { ref, onMounted, computed } from 'vue';
-import matter from 'gray-matter';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useAboutStore } from '@/stores/aboutStore';
 
-const posts = ref([]);
-const postCount = ref(0);
-const tagCount = ref(0);
+// 使用 pinia
+const aboutStore = useAboutStore();
 
-onMounted(async () => {
-  try {
-    const postFiles = import.meta.glob('@/posts/*.md', { 
-      query: '?raw', 
-      import: 'default', 
-      eager: true 
-    });
-    
-    for (const [path, rawContent] of Object.entries(postFiles)) {
-      const fileName = path.split('/').pop();
-      const id = fileName.replace('.md', '');
-      const { data, content } = matter(rawContent);
-      
-      // 确保tags始终是数组
-      let tags = [];
-      if (data.tags) {
-        tags = Array.isArray(data.tags) ? data.tags : [data.tags];
-      }
-      
-      posts.value.push({
-        id,
-        title: data.title || '无标题',
-        date: data.date ? new Date(data.date) : new Date(),
-        tags: tags.filter(Boolean), // 过滤掉空值
-      });
-    }
-    
-    posts.value.sort((a, b) => b.date - a.date);
-    postCount.value = posts.value.length;
-    
-    // 计算标签数量
-    const allTags = computed(() => {
-      const tags = new Set();
-      posts.value.forEach(post => {
-        post.tags?.forEach(tag => tags.add(tag));
-      });
-      return Array.from(tags);
-    });
-    
-    tagCount.value = allTags.value.length;
-    
-  } catch (error) {
-    console.error('加载文章失败:', error);
-  }
+const { postCount, tagCount, posts } = storeToRefs(aboutStore)
+
+onMounted(() => {
+  // 页面挂载时调用加载文章的接口
+  aboutStore.loadPosts();
 });
 </script>
 
@@ -94,7 +55,7 @@ onMounted(async () => {
 }
 
 .card {
-  background-color: white;
+  background-color: var(--bg-color);
   padding: 20px;
   display: flex;
   flex-direction: column;

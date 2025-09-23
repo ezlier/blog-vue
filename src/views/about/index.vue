@@ -24,7 +24,7 @@
     </div>
     
     <div class="rightcolumn">
-      <!-- 右侧内容 -->
+      
        <div class="aboutme">
         <span><h1 class="aaa">关于</h1></span>
         <p style="margin-top: 10px;">欢迎来到我的小站</p>
@@ -134,14 +134,14 @@
 }
 
 .name {
-  display: flex;          /* 启用 Flex 布局 */
-  align-items: center;    /* 垂直居中 */
-  gap: 20px;              /* 图片和文字之间的间距 */
+  display: flex;          
+  align-items: center;    
+  gap: 20px;             
   margin-bottom: 20px;
 }
 
 .avatar {
-  border-radius: 50%;  /* 使图片变成圆形 */
+  border-radius: 50%;  
   object-fit: cover;   
   box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.2);
 }
@@ -164,7 +164,7 @@
   font-size: 24px;
   color: rgba(255, 255, 255, 0.8);
   
-  text-align: right; /* 右对齐 */
+  text-align: right; 
 }
 
 .aboutweb{
@@ -173,11 +173,11 @@
 
 @media (max-width: 768px) {
   .row {
-    flex-direction: column; /* 改为纵向排列 */
+    flex-direction: column;
   }
   
   .leftcolumn, .rightcolumn {
-    flex: 1 1 100%; /* 占满整行 */
+    flex: 1 1 100%;
     width: 100%;
   }
 

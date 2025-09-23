@@ -25,7 +25,7 @@ onMounted(async () => {
       const id = fileName.replace('.md', '');
       const { data, content } = matter(rawContent);
       
-      // 确保tags始终是数组
+      
       let tags = [];
       if (data.tags) {
         tags = Array.isArray(data.tags) ? data.tags : [data.tags];
@@ -35,7 +35,7 @@ onMounted(async () => {
         id,
         title: data.title || '无标题',
         date: data.date ? new Date(data.date) : new Date(),
-        tags: tags.filter(Boolean), // 过滤掉空值
+        tags: tags.filter(Boolean),
       });
     }
     
@@ -46,7 +46,7 @@ onMounted(async () => {
   }
 });
 
-// 获取所有标签
+
 const allTags = computed(() => {
   const tags = new Set();
   posts.value.forEach(post => {
@@ -55,7 +55,7 @@ const allTags = computed(() => {
   return ['全部', ...Array.from(tags).sort()];
 });
 
-// 按标签筛选文章
+
 const filteredPosts = computed(() => {
   if (activeTag.value === '全部') {
     return posts.value;
@@ -94,7 +94,6 @@ const groupedPosts = computed(() => {
         <About/>
       </div>
       <div class="rightcolumn">
-        <!-- 标签筛选器 -->
         <div class="tag-filter">
           <button
             v-for="tag in allTags"
@@ -140,6 +139,7 @@ const groupedPosts = computed(() => {
   width: 100%;
   max-width: 1280px;
   box-sizing:border-box;
+  margin: 0 auto;
 }
 
 .leftcolumn {
@@ -156,7 +156,7 @@ const groupedPosts = computed(() => {
   min-width: 0;
   border-radius: 8px;
   box-shadow: 2px 2px 5px #000;
-  background-color: whitesmoke;
+  background-color: var(--bg-color);
   box-sizing: border-box;
 }
 
@@ -175,7 +175,7 @@ const groupedPosts = computed(() => {
 
 .year-group h2 {
   position: relative;
-  color: #333;
+  color: #fcbad3;
   border-bottom: 1px solid #ddd;
   padding-bottom: 8px;
   margin-bottom: 15px;
@@ -188,11 +188,11 @@ const groupedPosts = computed(() => {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 20px; /* 初始宽度 */
+  width: 20px;
   height: 6px;
   background: linear-gradient(to right, #d3959b, #d3959b);
-  border-radius: 3px; /* 圆角（高度的一半） */
-  transition: width 2s ease; 
+  border-radius: 3px;
+  transition: width 1s ease;
 }
 
 
@@ -208,7 +208,6 @@ const groupedPosts = computed(() => {
 
 .post-item {
   position: relative; 
-  
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -217,16 +216,16 @@ const groupedPosts = computed(() => {
 }
 
 .post-item::before {
-  content: "┇"; /* 默认显示竖线 */
+  content: "┇";
   position: absolute;
-  left: 0;
+  
   color: #fcbad3;
-  transition: all 2s ease; /* 添加过渡效果 */
+  transition: all 2s ease;
   transform: scale(1.2); 
 }
 
 .post-item:hover::before {
-  content: "◊"; /* 悬停时显示菱形 */
+  content: "◊";
   color: #a8d8ea;
   transform: scale(1.2); 
 }

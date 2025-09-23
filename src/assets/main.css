@@ -1,9 +1,8 @@
 @import './base.css';
 
-/* 重置 body 布局 */
 body {
   min-height: 100vh;
-  background-image: url('@/assets/img/background.png');
+  /* background-image: url('@/assets/img/background.png'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -11,24 +10,18 @@ body {
   margin: 0;
   
   display: flex;
-  flex-direction: column; /* 关键：改为垂直布局 */
+  flex-direction: column;
 }
 
-/* 调整 #app 以支持粘性页脚 */
 #app {
   width: 100%;
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
   
   box-sizing: border-box;
-  flex: 1; /* 关键：撑满剩余空间 */
+  flex: 1;
   display: flex;
-  flex-direction: column; /* 确保内部也是垂直布局 */
-}
-
-/* 移除媒体查询中冲突的 body 样式 */
-@media (min-width: 1024px) {
-  /* 不再需要 place-items: center */
+  flex-direction: column;
 }
 
 

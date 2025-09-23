@@ -26,7 +26,13 @@ export default {
       "知而不行，只是未知。",
       "为君沉醉又何妨，只怕酒醒时候断人肠。",
       "时间是存在者的时间。",
-      "犹豫就会败北",
+      "犹豫就会败北。",
+      "雪珠声声入耳，一如古柏，我身依然故我。",
+      "不可视他人所得为我之失。",
+      "命运之剑有两道剑锋，其中之一是你",
+      "年少的时候，你拥有的时间似乎无穷无尽，一月似一年，一年似一生",
+      "有人倒下，也要继续前行",
+
     ];
     const displayedText = ref('');
     const currentText = ref('');
@@ -38,14 +44,11 @@ export default {
     };
 
     const typeWriter = () => {
-      // 先清除现有内容
       displayedText.value = ' ';
       
-      // 获取新随机文本
       currentText.value = getRandomText();
       let i = 0;
       
-      // 清除之前的定时器
       if (typingInterval) clearInterval(typingInterval);
       
       typingInterval = setInterval(() => {
@@ -54,12 +57,11 @@ export default {
           i++;
         } else {
           clearInterval(typingInterval);
-          // 3秒后开始新的打字效果
           setTimeout(() => {
             typeWriter();
           }, 3000);
         }
-      }, 150); // 调整这个值可以改变打字速度
+      }, 150);
     };
 
     onMounted(() => {
@@ -103,7 +105,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
   text-align: center;
   min-height: 20px; 
-  /* height: 44px;       */
+  /* height: 44px;*/
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +116,6 @@ export default {
   font-style:italic
 }
 
-/* 新增光标动画 */
 .sub-content::after {
   content: "|";
   position: absolute;

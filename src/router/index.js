@@ -42,14 +42,14 @@ const router = createRouter({
         
     ],
     scrollBehavior(to, from, savedPosition) {
-    // 如果路由中有指定的滚动位置（如锚点）
+    
     if (to.hash) {
       return {
         el: to.hash,
         behavior: 'smooth',
       }
     }
-    // 否则滚动到页面顶部
+    
     return { top: 0 }
   }
 })

@@ -7,8 +7,9 @@ import Returntop from '@/components/returntop.vue';
 </script>
 
 <template>
-  
-    <PointerTextTrail class="texiao"/>
+    <div class="bg"/>
+    <PointerTextTrail class="texiao "/>
+    
     <Nav />
     <main class="main-content">
         <router-view  />
@@ -19,22 +20,25 @@ import Returntop from '@/components/returntop.vue';
 </template>
 
 <style scoped>
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+
+.bg {
+  position: fixed;         /* 固定在视口 */
+  top: 0;
+  left: 0;
+  width: 100vw;            /* 拉伸占满全屏 */
+  height: 100vh;
+  background-image: url('@/assets/img/background.png');
+  background-size: cover;  /* 拉伸裁剪为最大，保持比例 */
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: -1;             /* 放到内容后面 */
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; 
+.dark .bg{
+  background-color: #222831;
+  background-image: none;
 }
 
-.main-content {
-  flex: 1 ; 
-  
-}
 
 @media (max-width: 1024px) {
   .texiao{

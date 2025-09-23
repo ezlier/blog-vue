@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAboutStore } from '@/stores/aboutStore'
 import { storeToRefs } from 'pinia'
+import darklight from '@/components/darklight.vue'
 
 import icon from '@/assets/img/icon1.png'
 import zhuye from '@/assets/img/icon/zhuye.png'
@@ -59,9 +60,12 @@ onMounted(async () => {
 <template>
   <nav class="navbar" :class="{ 'navbar-hidden': !isNavbarVisible, 'navbar-transparent': navbarTransparent }">
     <img :src="icon" height="50" class="logo" />
-
+    
     <!-- 桌面导航 -->
     <ul class="nav-links desktop-nav">
+      <li class="darklight-wrapper">
+        <darklight/>
+      </li>
       <li>
         <router-link to="/" exact-active-class="active">
           <img :src="zhuye" class="icon" /> 首页
@@ -78,7 +82,11 @@ onMounted(async () => {
         </router-link>
       </li>
     </ul>
-    <img :src="menuIcon" class="menu-icon" @click="toggleSidebar" />
+
+    <div class="menu-actions">
+      <darklight />
+      <img :src="menuIcon" class="menu-icon" @click="toggleSidebar" />
+    </div>
 
     <!-- 移动端 -->
     <teleport to="body">
@@ -169,7 +177,7 @@ onMounted(async () => {
 }
 
 .card {
-  background-color: white;
+  /* background-color: white; */
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -243,7 +251,7 @@ onMounted(async () => {
 }
 
 .menu-icon {
-  display: none;
+  
   height: 30px;
   cursor: pointer;
   z-index: 1101;
@@ -255,7 +263,7 @@ onMounted(async () => {
   right: 0;
   width: 200px;
   height: 100vh;
-  background-color: white;
+  background-color: var(--bg-color);
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1101;
   padding: 10px; 
@@ -292,7 +300,6 @@ onMounted(async () => {
   background-color: rgba(247, 119, 119, 0.1);
 }
 
-/* 选中状态 */
 .mobile-nav li a.active {
   background-color: #aa96da;
   border: 2px solid #fff;
@@ -305,7 +312,6 @@ onMounted(async () => {
   font-weight: bold;
 }
 
-/* 遮罩 */
 .overlay {
   position: fixed;
   top: 0;
@@ -316,7 +322,6 @@ onMounted(async () => {
   z-index: 1100;
 }
 
-/* 动画过渡 */
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.3s ease;
@@ -337,12 +342,22 @@ onMounted(async () => {
   opacity: 0;
 }
 
+.darklight-wrapper {
+  align-items: center;
+}
+
+.menu-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  display: none;
+}
 
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
   }
-  .menu-icon {
+  .menu-actions {
     display: block;
   }
 }

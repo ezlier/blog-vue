@@ -1,4 +1,3 @@
-// stores/aboutStore.js
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import matter from 'gray-matter'
@@ -10,6 +9,7 @@ export const useAboutStore = defineStore('about', () => {
   
   const loadPosts = async () => {
     try {
+      posts.value = []
       const postFiles = import.meta.glob('@/posts/*.md', { 
         query: '?raw', 
         import: 'default', 
@@ -34,11 +34,11 @@ export const useAboutStore = defineStore('about', () => {
         })
       }
       
-      // 按日期排序
+      
       posts.value.sort((a, b) => b.date - a.date)
       postCount.value = posts.value.length
       
-      // 计算不重复的标签数量
+      
       const uniqueTags = new Set()
       posts.value.forEach(post => {
         post.tags?.forEach(tag => uniqueTags.add(tag))

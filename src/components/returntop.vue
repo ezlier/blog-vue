@@ -32,7 +32,7 @@ export default {
       type: Number,
       default: 40
     },
-    // 滚动动画时间(ms)
+    
     duration: {
       type: Number,
       default: 1000

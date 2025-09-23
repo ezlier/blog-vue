@@ -44,17 +44,14 @@ let observer = null
 
 window.Buffer = Buffer
 
-// 计算属性：当前可见的文章
 const visiblePosts = computed(() => {
   return posts.value.slice(0, visibleCount.value)
 })
 
-// 检查是否还有更多内容可加载
 const hasMorePosts = computed(() => {
   return visibleCount.value < posts.value.length
 })
 
-// 格式化日期
 const formatDate = (dateString) => {
   if (!dateString) return '无日期'
   try {
@@ -68,12 +65,10 @@ const formatDate = (dateString) => {
   }
 }
 
-// 跳转到文章详情页
 const goToPost = (id) => {
   router.push({ name: 'PostDetail', params: { id } })
 }
 
-// 加载更多文章
 const loadMore = () => {
   if (isLoading.value || !hasMorePosts.value) return
   
@@ -84,9 +79,7 @@ const loadMore = () => {
   }, 500)
 }
 
-// 初始化IntersectionObserver
 const initObserver = () => {
-  // 确保观察器只初始化一次
   if (observer) return
   
   observer = new IntersectionObserver(
@@ -98,7 +91,7 @@ const initObserver = () => {
     },
     {
       root: null,
-      rootMargin: '100px', // 提前100px触发
+      rootMargin: '100px',
       threshold: 0.1
     }
   )
@@ -108,9 +101,9 @@ const initObserver = () => {
   }
 }
 
-// 加载并解析所有 Markdown 文件
 onMounted(async () => {
   try {
+    posts.value = [] 
     const postFiles = import.meta.glob('@/posts/*.md', { 
       query: '?raw', 
       import: 'default', 
@@ -139,7 +132,6 @@ onMounted(async () => {
     
     posts.value.sort((a, b) => new Date(b.date) - new Date(a.date))
     
-    // 确保DOM更新后初始化观察器
     setTimeout(initObserver, 100)
     
   } catch (error) {
@@ -147,7 +139,6 @@ onMounted(async () => {
   }
 })
 
-// 组件卸载时清除观察器
 onUnmounted(() => {
   if (observer) {
     observer.disconnect()
@@ -166,7 +157,7 @@ onUnmounted(() => {
 }
 
 .card {
-  background-color: white;
+  background-color: var(--bg-color);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -210,7 +201,7 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .card-container {
-    grid-template-columns: 1fr; /* 一列 */
+    grid-template-columns: 1fr;
   }
 }
 </style>

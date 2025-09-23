@@ -19,7 +19,7 @@ const daysRunning = ref(0);
 
 
 onMounted(() => {
-  const startDate = new Date('2025-07-18'); //博客运行天数
+  const startDate = new Date('2025-07-18');
   const today = new Date();
   const diffTime = Math.abs(today - startDate);
   daysRunning.value = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
