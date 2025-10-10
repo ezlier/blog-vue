@@ -10,19 +10,26 @@ import bostlist from './components/bostlist.vue';
 <div class="header">
  <Welcome/>
 </div>
-<div class="row">
-  <div class="leftcolumn">
-    <About/>
-  </div>
-  
-  <div class="rightcolumn">
-    <bostlist/>
+<div class="bg">
+  <div class="row">
+    <div class="leftcolumn">
+      <About/>
+    </div>
+    
+    <div class="rightcolumn">
+      <bostlist/>
+    </div>
   </div>
 </div>
 </template>
 
 
 <style scoped>
+.bg {
+  width: 100%;
+  background-color: antiquewhite;
+}
+
 .row {
   display: flex;
   align-items: flex-start;
@@ -56,7 +63,7 @@ import bostlist from './components/bostlist.vue';
 }
 
 .header{
-  height: 600px;
+  height: 100vh;
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center;

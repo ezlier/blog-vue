@@ -7,13 +7,14 @@
       :style="{ bottom: bottom + 'px', right: right + 'px' }"
     >
       <slot>
-        <div class="default-btn">↑</div>
+        <div class="default-btn"><img :src="icon" alt=""></div>
       </slot>
     </div>
   </transition>
 </template>
 
 <script>
+import icon from '@/assets/img/icon/huidaodingbu.png'
 export default {
   name: 'BackToTop',
   props: {
@@ -91,7 +92,7 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #409eff;
+  background-color: #aa96da;
   color: white;
   display: flex;
   align-items: center;
@@ -102,7 +103,7 @@ export default {
 }
 
 .default-btn:hover {
-  background-color: #66b1ff;
+  background-color: #a8d8ea;
   transform: scale(1.1);
 }
 
