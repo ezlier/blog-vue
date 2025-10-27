@@ -27,7 +27,7 @@ import bostlist from './components/bostlist.vue';
 <style scoped>
 .bg {
   width: 100%;
-  background-color: antiquewhite;
+  background-color: var(--bg-content);;
 }
 
 .row {

@@ -7,7 +7,7 @@
       :style="{ bottom: bottom + 'px', right: right + 'px' }"
     >
       <slot>
-        <div class="default-btn"><img :src="icon" alt=""></div>
+        <div class="default-btn">👆</div>
       </slot>
     </div>
   </transition>

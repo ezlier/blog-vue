@@ -30,7 +30,7 @@
         <p style="margin-top: 10px;">欢迎来到我的小站</p>
         <ul>
           <li>普通在校大学生，主要学习后端</li>
-          <li>爱玩FPS，是卡拉比丘量产猫娘喵（？）</li>
+          <li>爱玩FPS</li>
           <li>喵喵喵</li>
         </ul>
        </div>
