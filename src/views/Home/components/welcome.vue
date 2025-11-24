@@ -93,9 +93,21 @@ export default {
 }
 
 .blog-content {
-  font-size: 2rem;
+  /* margin-top: 300px; */
+  font-size: 4rem;
   font-weight: bold;
   color: #8785a2;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #000);
+  animation: animate 5s linear infinite;
+}
+@keyframes animate{
+  0%,21%,31%,51%,60%,80%,90%{
+    color: #8785a2;
+  }
+  20%,30%,50%,80%,100%{
+    color: whitesmoke;
+    text-shadow: 0 0 10px #8785a2,0 0 20px #8785a2,0 0 40px #8785a2,0 0 80px #8785a2
+  }
 }
 
 .sub-content {
